@@ -1,4 +1,4 @@
-package assiggnment_0627.q1;
+package assignment_0627.assignment1;
 
 public class Prob1 {
 
