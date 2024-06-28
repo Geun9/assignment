@@ -14,10 +14,10 @@ public class Student {
         this.fee = fee;
     }
 
-    public void calcReturnFee(Student student) {
-        if (subject.equals("javaprogram")) {
+    public void calcReturnFee() {
+        if (this.subject.equals("javaprogram")) {
             this.returnFee = fee * 0.25;
-        } else if (subject.equals("jspprogram")) {
+        } else if (this.subject.equals("jspprogram")) {
             this.returnFee = fee * 0.2;
         } else {
             System.out.println("그런 과정명은 없습니다.");

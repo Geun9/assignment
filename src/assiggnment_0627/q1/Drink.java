@@ -17,7 +17,7 @@ public class Drink {
         return this.price * this.count;
     }
 
-    void printTitle() {
+    static void printTitle() {
         System.out.println("상품명\t단가\t\t\t수량\t\t금액");
     }
 
