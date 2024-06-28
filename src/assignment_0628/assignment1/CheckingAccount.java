@@ -19,7 +19,7 @@ public class CheckingAccount extends Account{
 
     public void pay(String cardNo, long amount) {
         if (this.cardNo.equals(cardNo) && this.getBalance() >= amount) {
-            this.setBalance(this.getBalance() - amount);
+            withdraw(amount);
         }
     }
 }
