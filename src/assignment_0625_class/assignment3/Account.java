@@ -1,4 +1,4 @@
-package assignment_0625.assignment3;
+package assignment_0625_class.assignment3;
 
 public class Account {
     private String accNo;

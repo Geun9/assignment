@@ -1,4 +1,4 @@
-package assignment_0625.assignment1;
+package assignment_0625_class.assignment1;
 
 public class Move {
     String title;

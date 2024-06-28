@@ -1,4 +1,4 @@
-package assignment_0625.assignment2;
+package assignment_0625_class.assignment2;
 
 public class Employee {
     private String name;
