@@ -1,4 +1,4 @@
-package assignment_0625_array.assignment2;
+package assignment_week3_array.assignment2;
 
 public class Exam01_0625 {
     public static void main(String[] args) {

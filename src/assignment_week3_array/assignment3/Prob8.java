@@ -1,4 +1,4 @@
-package assignment_0625_array.assignment3;
+package assignment_week3_array.assignment3;
 
 import java.util.Arrays;
 

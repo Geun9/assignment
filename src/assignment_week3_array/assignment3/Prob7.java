@@ -1,4 +1,4 @@
-package assignment_0625_array.assignment3;
+package assignment_week3_array.assignment3;
 
 public class Prob7 {
 	public static void main(String[] args) throws Exception {
