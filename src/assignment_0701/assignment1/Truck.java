@@ -1,4 +1,4 @@
-package assignment_0701;
+package assignment_0701.assignment1;
 
 public class Truck extends Wheeler {
 
