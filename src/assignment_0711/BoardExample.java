@@ -12,6 +12,7 @@ import java.util.List;
 public class BoardExample {
 
     private static final String MENU_NUMBER = "[1-4]+";
+    private static final String SUB_MENU_NUMBER = "[1-2]+";
     private static boolean isQuit = false;
     private static List<Board> boardList = new ArrayList<>();
     private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -40,6 +41,10 @@ public class BoardExample {
         }
     }
 
+    /*
+     * 메뉴 입력 받기
+     * 입력 받은 번호의 기능 실행
+     */
     private static void mainMenu() throws IOException {
         System.out.print(BoardText.MENU_SELECT.getText());
         String inputMenuSelect = br.readLine();
@@ -55,6 +60,9 @@ public class BoardExample {
         }
     }
 
+    /*
+     * 게시글 생성
+     */
     private static void createBoard() throws IOException {
         System.out.println(BoardText.CREATE_BOARD.getText());
         System.out.print(BoardText.TITLE.getText());
@@ -64,7 +72,16 @@ public class BoardExample {
         System.out.print(BoardText.WRITER.getText());
         String writer = br.readLine();
 
-        boardList.add(new Board(title, content, writer));
+        /*
+         * 게시글 생성 확인
+         */
+        printSubMenu();
+        String inputSubMenu = br.readLine();
+        if (inputSubMenu.matches(SUB_MENU_NUMBER)) {
+            if (Integer.parseInt(inputSubMenu) == 1) {
+                boardList.add(new Board(title, content, writer));
+            }
+        }
     }
 
     private static void readBoard() {
@@ -77,6 +94,12 @@ public class BoardExample {
 
     private static void exitProgram() {
         isQuit = !isQuit;
+    }
+
+    private static void printSubMenu() {
+        System.out.println(BoardText.BORDER_LINE.getText());
+        System.out.println(BoardText.SUB_MENU.getText());
+        System.out.print(BoardText.MENU_SELECT.getText());
     }
 
     private static String getDate() {
