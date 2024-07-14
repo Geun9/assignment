@@ -84,8 +84,27 @@ public class BoardExample {
         }
     }
 
-    private static void readBoard() {
+    /*
+     * 게시글 읽기
+     */
+    private static void readBoard() throws IOException{
+        System.out.println(BoardText.READ_BOARD.getText());
+        System.out.print(BoardText.BNO.getText());
 
+        int inputBno = Integer.parseInt(br.readLine());
+        for (Board board : boardList) {
+            if (board.getBno() == inputBno) {
+                System.out.println(BoardText.BOARD_SEPARATOR.getText());
+                System.out.println(BoardText.NO.getText() + board.getBno());
+                System.out.println(BoardText.TITLE.getText() + board.getBtitle());
+                System.out.println(BoardText.CONTENT.getText() + board.getBcontent());
+                System.out.println(BoardText.WRITER.getText() + board.getBwriter());
+                System.out.println(BoardText.DATE.getText() + board.getDate());
+                System.out.println(BoardText.BOARD_SEPARATOR.getText());
+
+                break;
+            }
+        }
     }
 
     private static void clearBoard() {

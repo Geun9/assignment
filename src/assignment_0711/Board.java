@@ -29,7 +29,7 @@ public class Board {
         return String.format("%-6d\t%-10s\t%-15s\t%-20s", this.bno, this.bwriter, getDate(), this.btitle);
     }
 
-    private String getDate() {
+    public String getDate() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd");
         return simpleDateFormat.format(this.bdate);
     }

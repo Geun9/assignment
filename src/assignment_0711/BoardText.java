@@ -10,6 +10,7 @@ public enum BoardText {
     UPDATE_BOARD("\n[수정 내용 입력]"),
     CLEAR_BOARD("\n[게시글 전체 삭제]"),
     EXIT_PROGRAM("** 게시글 종료 **"),
+    BNO("bno: "),
     NO("번호: "),
     TITLE("제목: "),
     CONTENT("내용: "),
