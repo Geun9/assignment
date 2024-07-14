@@ -33,5 +33,4 @@ public class Board {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd");
         return simpleDateFormat.format(this.bdate);
     }
-
 }

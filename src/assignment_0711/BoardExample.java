@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class BoardExample {
@@ -37,6 +39,13 @@ public class BoardExample {
     }
 
     private static void list() {
+        Collections.sort(boardList, new Comparator<Board>() {
+            @Override
+            public int compare(Board b1, Board b2) {
+                return String.valueOf(b1.getBno()).compareTo(String.valueOf(b2.getBno())) * (-1);
+            }
+        });
+
         for (Board board : boardList) {
             System.out.println(board.toString());
         }
