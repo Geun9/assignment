@@ -4,8 +4,6 @@ package assignment_0711;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -16,6 +14,7 @@ public class BoardExample {
     private static final String MENU_NUMBER = "[1-4]+";
     private static final String SUB_MENU_NUMBER = "[1-2]+";
     private static final String READ_SUB_MENU_NUMBER = "[1-3]+";
+    private static final int SUB_MENU_OK = 1;
     private static boolean isQuit = false;
     private static List<Board> boardList = new ArrayList<>();
     private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -85,19 +84,17 @@ public class BoardExample {
         /*
          * 게시글 생성 확인
          */
-        printSubMenu();
-        String inputSubMenu = br.readLine();
-        if (inputSubMenu.matches(SUB_MENU_NUMBER)) {
-            if (Integer.parseInt(inputSubMenu) == 1) {
-                boardList.add(new Board(title, content, writer));
-            }
+        int inputSubMenu = subMenu();
+        if (inputSubMenu == SUB_MENU_OK) {
+            boardList.add(new Board(title, content, writer));
+
         }
     }
 
     /*
      * 게시글 읽기
      */
-    private static void read() throws IOException{
+    private static void read() throws IOException {
         System.out.println(BoardText.READ_BOARD.getText());
         System.out.print(BoardText.BNO.getText());
 
@@ -135,9 +132,9 @@ public class BoardExample {
     }
 
     /*
-     * 게시글 수정
+     * 게시글 읽기 > 해당 게시글 수정
      */
-    private static void update(Board board) throws IOException{
+    private static void update(Board board) throws IOException {
         System.out.println(BoardText.UPDATE_BOARD.getText());
         System.out.print(BoardText.TITLE.getText());
         String title = br.readLine();
@@ -149,32 +146,56 @@ public class BoardExample {
         /*
          * 게시글 수정 확인
          */
-        printSubMenu();
-        String inputSubMenu = br.readLine();
-        if (inputSubMenu.matches(SUB_MENU_NUMBER)) {
-            if (Integer.parseInt(inputSubMenu) == 1) {
+        int inputSubMenu = subMenu();
+            if (inputSubMenu == SUB_MENU_OK) {
                 board.setBtitle(title);
                 board.setBcontent(content);
                 board.setBwriter(writer);
-            }
         }
     }
 
+    /*
+     * 게시글 읽기 > 해당 게시글 삭제
+     */
     private static void delete(Board board) {
         boardList.remove(board);
     }
 
-    private static void clear() {
+    /*
+     * 게시글 전체 삭제
+     */
+    private static void clear() throws IOException{
+        System.out.println(BoardText.CLEAR_BOARD.getText());
 
+        /*
+         * 게시글 전체 삭제 확인
+         */
+        int inputSubMenu = subMenu();
+        if (inputSubMenu == SUB_MENU_OK) {
+            boardList.clear();
+        }
     }
 
+    /*
+     * 프로그램 종료
+     */
     private static void exit() {
         isQuit = !isQuit;
     }
 
-    private static void printSubMenu() {
+    /*
+     * 보조 메뉴 (생성/수정/삭제 확인용)
+     */
+    private static int subMenu() throws IOException {
         System.out.println(BoardText.BORDER_LINE.getText());
         System.out.println(BoardText.SUB_MENU.getText());
         System.out.print(BoardText.MENU_SELECT.getText());
+
+        String inputSubMenu = br.readLine();
+        if (inputSubMenu.matches(SUB_MENU_NUMBER)) {
+            return Integer.parseInt(inputSubMenu);
+        } else {
+            return 0;
+        }
     }
 }
