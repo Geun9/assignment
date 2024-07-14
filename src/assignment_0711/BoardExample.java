@@ -152,7 +152,7 @@ public class BoardExample {
     }
 
     private static void delete(Board board) {
-
+        boardList.remove(board);
     }
 
     private static void clear() {
