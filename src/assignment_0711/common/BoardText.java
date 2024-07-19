@@ -1,4 +1,4 @@
-package assignment_0711;
+package assignment_0711.common;
 
 public enum BoardText {
     HEADER("\n[게시글 목록]"),
