@@ -1,23 +1,34 @@
 package assignment_0711.config;
 
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class ConnectionFactory {
-    // ConnectionFactory에 MySQL server로 부터 Connection을 얻어오는 open() 메서드를 작성
-    // 조건: 싱글톤 패턴을 적용하여 만들어주세요.
-
-
+    private static Properties properties = new Properties();
     private static Connection connection = null;
-    private static String url = "jdbc:mysql://localhost:3306/ssgdatabase?characterEncoding=UTF-8&serverTimezone=UTC";
-    private static String id = "root";
-    private static String pwd = "qwer1234";
+    private static String url;
+    private static String id;
+    private static String pwd;
 
     private static final ConnectionFactory instance = new ConnectionFactory();
 
     private ConnectionFactory() {
+        try {
+            properties.load(new FileInputStream("src/assignment_0711/config/db.properties"));
 
+            url = properties.getProperty("db.url");
+            id = properties.getProperty("db.username");
+            pwd = properties.getProperty("db.password");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public static ConnectionFactory getInstance() {
@@ -34,10 +45,12 @@ public class ConnectionFactory {
     }
 
     public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
         }
     }
 }
