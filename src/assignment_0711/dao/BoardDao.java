@@ -114,7 +114,6 @@ public class BoardDao {
                 board.setBcontent(rs.getString("content"));
                 board.setBwriter(rs.getString("writer"));
                 board.setBdate(rs.getTimestamp("createdAt"));
-
             }
 
             rs.close();

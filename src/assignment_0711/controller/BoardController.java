@@ -1,7 +1,10 @@
 package assignment_0711.controller;
 
 import assignment_0711.common.BoardText;
+import assignment_0711.common.ErrorCode;
+import assignment_0711.exception.BoardException;
 import assignment_0711.service.BoardService;
+import assignment_0711.service.serviceImpl.BoardServiceImpl;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,12 +14,16 @@ public class BoardController {
     private static final String MENU_NUMBER = "^[1-4]";
     private static boolean isQuit = false;
     private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    private static BoardService boardService = new BoardService();
+    private static BoardService boardService = new BoardServiceImpl();
 
-    public static void main(String[] args) throws IOException {
-        while (!isQuit) {
-            displayMenuList();
-            mainMenu();
+    public static void main(String[] args) {
+        try {
+            while (!isQuit) {
+                displayMenuList();
+                mainMenu();
+            }
+        } catch (BoardException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -34,18 +41,24 @@ public class BoardController {
     /**
      * 메뉴 입력 받기 입력 받은 번호의 기능 실행
      */
-    private static void mainMenu() throws IOException {
-        System.out.print(BoardText.MENU_SELECT.getText());
-        String inputMenuSelect = br.readLine();
-        if (inputMenuSelect.matches(MENU_NUMBER)) {
-            switch (Integer.parseInt(inputMenuSelect)) {
-                case 1 -> boardService.insertBoard();
-                case 2 -> boardService.getBoard();
-                case 3 -> boardService.clearBoard();
-                case 4 -> exit();
+    private static void mainMenu() {
+        try {
+            System.out.print(BoardText.MENU_SELECT.getText());
+            String inputMenuSelect = br.readLine().trim();
+            if (inputMenuSelect.matches(MENU_NUMBER)) {
+                switch (Integer.parseInt(inputMenuSelect)) {
+                    case 1 -> boardService.insertBoard();
+                    case 2 -> boardService.getBoard();
+                    case 3 -> boardService.clearBoard();
+                    case 4 -> exit();
+                }
+            } else {
+                throw new BoardException(ErrorCode.INVALID_MENU_OPTION);
             }
-        } else {
-            System.out.println("\n없는 메뉴 번호입니다.\n다시 입력해주세요.\n");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (BoardException e) {
+            System.out.println(e.getMessage());
         }
     }
 
