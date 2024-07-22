@@ -2,6 +2,7 @@ package assignment_0711.service.serviceImpl;
 
 import assignment_0711.common.BoardText;
 import assignment_0711.common.ErrorCode;
+import assignment_0711.common.ValidCheck;
 import assignment_0711.dao.BoardDao;
 import assignment_0711.dto.Board;
 import assignment_0711.exception.BoardException;
@@ -12,20 +13,18 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 public class BoardServiceImpl implements BoardService {
-
-    private static final String SUB_MENU_NUMBER = "^[1-2]";
-    private static final String READ_SUB_MENU_NUMBER = "^[1-3]";
     private static final int SUB_MENU_OK = 1;
     private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     private static BoardDao boardDao = new BoardDao();
+    private static ValidCheck validCheck = new ValidCheck();
 
     @Override
     public void list() {
-            List<Board> list = boardDao.list();
+        List<Board> list = boardDao.list();
 
-            for (Board board : list) {
-                System.out.println(board.toString());
-            }
+        for (Board board : list) {
+            System.out.println(board.toString());
+        }
 
     }
 
@@ -37,20 +36,15 @@ public class BoardServiceImpl implements BoardService {
         try {
             System.out.print(BoardText.TITLE.getText());
             String title = br.readLine();
+            validCheck.isTitleLengthValid(title);
             System.out.print(BoardText.CONTENT.getText());
             String content = br.readLine();
             System.out.print(BoardText.WRITER.getText());
             String writer = br.readLine();
-
-            if (title.length() > 25) {
-                throw new BoardException(ErrorCode.TITLE_STRING_TOO_LONG);
-            } else if (writer.length() > 10) {
-                throw new BoardException(ErrorCode.AUTHOR_STRING_TOO_LONG);
-            } else if (title.isEmpty() || content.isEmpty() || writer.isEmpty()) {
-                throw new BoardException(ErrorCode.NULL_BOARD_INPUT);
-            }
+            validCheck.isWriterLengthValid(writer);
 
             Board board = new Board(title, content, writer);
+            validCheck.isBoardValid(board);
 
             int inputSubMenu = subMenu();
             if (inputSubMenu == SUB_MENU_OK) {
@@ -107,14 +101,12 @@ public class BoardServiceImpl implements BoardService {
             System.out.println(BoardText.READ_SUB_MENU.getText());
             System.out.print(BoardText.MENU_SELECT.getText());
 
-            String inputSubMenu = br.readLine();
-            if (inputSubMenu.matches(READ_SUB_MENU_NUMBER)) {
-                switch (Integer.parseInt(inputSubMenu)) {
-                    case 1 -> updateBoard(board);
-                    case 2 -> deleteBoard(board);
-                }
-            } else {
-                throw new BoardException(ErrorCode.INVALID_MENU_OPTION);
+            String inputSubMenu = br.readLine().trim();
+            validCheck.isReadSubMenuValid(inputSubMenu);
+
+            switch (Integer.parseInt(inputSubMenu)) {
+                case 1 -> updateBoard(board);
+                case 2 -> deleteBoard(board);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -132,22 +124,18 @@ public class BoardServiceImpl implements BoardService {
             System.out.println(BoardText.UPDATE_BOARD.getText());
             System.out.print(BoardText.TITLE.getText());
             String title = br.readLine();
+            validCheck.isTitleLengthValid(title);
             System.out.print(BoardText.CONTENT.getText());
             String content = br.readLine();
             System.out.print(BoardText.WRITER.getText());
             String writer = br.readLine();
-
-            if (title.length() > 25) {
-                throw new BoardException(ErrorCode.TITLE_STRING_TOO_LONG);
-            } else if (writer.length() > 10) {
-                throw new BoardException(ErrorCode.AUTHOR_STRING_TOO_LONG);
-            } else if (title.isEmpty() || content.isEmpty() || writer.isEmpty()) {
-                throw new BoardException(ErrorCode.NULL_BOARD_INPUT);
-            }
+            validCheck.isWriterLengthValid(writer);
 
             Board updateBoard = new Board(title, content, writer);
+            validCheck.isBoardValid(updateBoard);
 
             int inputSubMenu = subMenu();
+
             if (inputSubMenu == SUB_MENU_OK) {
                 boardDao.updateBoard(board, updateBoard);
             }
@@ -192,11 +180,9 @@ public class BoardServiceImpl implements BoardService {
             System.out.print(BoardText.MENU_SELECT.getText());
 
             String inputSubMenu = br.readLine().trim();
-            if (inputSubMenu.matches(SUB_MENU_NUMBER)) {
-                return Integer.parseInt(inputSubMenu);
-            } else {
-                throw new BoardException(ErrorCode.INVALID_MENU_OPTION);
-            }
+            validCheck.isSubMenuValid(inputSubMenu);
+
+            return Integer.parseInt(inputSubMenu);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (NumberFormatException e) {
